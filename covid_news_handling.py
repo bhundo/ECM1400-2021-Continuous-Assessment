@@ -1,3 +1,4 @@
+"""Handler of any news processes relevant to the Covid Dashboard"""
 import sched
 import time
 import logging
@@ -18,9 +19,7 @@ def news_API_request(covid_terms=json.loads(open("config.json").read())["covid_t
     logging.info("news_API_request has been called successfully")
     return all_articles['articles']
 
-
 news_articles = news_API_request()
-
 
 def remove_news_article(title):
     """Appends removes articles to a removed article array and removes 
