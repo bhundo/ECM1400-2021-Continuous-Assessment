@@ -51,12 +51,14 @@ def schedule_news_updates(update_interval, update_name, repeat=False, cancelled=
     e1 = newsscheduler.enter(update_interval, 1, update_news)
     if repeat is True:
         e2 = newsscheduler.enter(update_interval, 3, lambda: schedule_news_updates(
-            update_interval=update_interval*24*60*60, update_name=update_name+' repeat', repeat=repeat))
-    e3 = newsscheduler.enter(update_interval, 3, logging.info("Scheduled news update has been completed."))        
+            update_interval=update_interval*24*60*60, update_name=update_name+' repeat', 
+                repeat=repeat))
+    e3 = newsscheduler.enter(update_interval, 3, 
+        logging.info("Scheduled news update has been completed."))        
     if cancelled is True:
         newsscheduler.cancel(e1)
         newsscheduler.cancel(e2)
         newsscheduler.cancel(e3)
-    newsscheduler.run()
+    newsscheduler.run(blocking=False)
 
 #schedule_news_updates(3, 'test')
